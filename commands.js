@@ -43,6 +43,22 @@ export async function InstallGuildCommand(appId, guildId, command) {
   }
 }
 
+// Simple test command
+export const TEST_COMMAND = {
+  name: 'test',
+  description: 'Basic guild command',
+  type: 1,
+};
+
+// Simple gpt command
+export const GPT3_COMMAND = {
+  name: 'gpt',
+  description: 'Basic gpt prompt',
+  type: 1,
+};
+
+
+
 // Get the game choices from game.js
 function createCommandChoices() {
   const choices = getRPSChoices();
@@ -57,26 +73,3 @@ function createCommandChoices() {
 
   return commandChoices;
 }
-
-// Simple test command
-export const TEST_COMMAND = {
-  name: 'test',
-  description: 'Basic guild command',
-  type: 1,
-};
-
-// Command containing options
-export const CHALLENGE_COMMAND = {
-  name: 'challenge',
-  description: 'Challenge to a match of rock paper scissors',
-  options: [
-    {
-      type: 3,
-      name: 'object',
-      description: 'Pick your object',
-      required: true,
-      choices: createCommandChoices(),
-    },
-  ],
-  type: 1,
-};

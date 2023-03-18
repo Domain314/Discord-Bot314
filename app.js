@@ -10,10 +10,11 @@ import {
 import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils.js';
 import { getShuffledOptions, getResult } from './game.js';
 import {
-  CHALLENGE_COMMAND,
+  GPT3_COMMAND,
   TEST_COMMAND,
   HasGuildCommands,
 } from './commands.js';
+import { helloWorld } from './src/com.js';
 
 // Create an express app
 const app = express();
@@ -32,6 +33,8 @@ app.post('/interactions', async function (req, res) {
   // Interaction type and data
   const { type, id, data } = req.body;
 
+  console.log(req.body);
+
   /**
    * Handle verification requests
    */
@@ -49,13 +52,7 @@ app.post('/interactions', async function (req, res) {
     // "test" guild command
     if (name === 'test') {
       // Send a message into the channel where command was triggered from
-      return res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          // Fetches a random emoji to send from a helper function
-          content: 'hello world ' + getRandomEmoji(),
-        },
-      });
+      return res.send(helloWorld());
     }
     // "challenge" guild command
     if (name === 'challenge' && id) {
@@ -181,6 +178,6 @@ app.listen(PORT, () => {
   // Check if guild commands from commands.js are installed (if not, install them)
   HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
     TEST_COMMAND,
-    CHALLENGE_COMMAND,
+    GPT3_COMMAND,
   ]);
 });
