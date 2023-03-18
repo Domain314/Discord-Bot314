@@ -11,7 +11,17 @@ export function helloWorld() {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
             // Fetches a random emoji to send from a helper function
-            content: 'hello world, gpt' + getRandomEmoji(),
+            content: 'hello world',
+        },
+    }
+}
+
+export function helloGPT() {
+    return {
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+            // Fetches a random emoji to send from a helper function
+            content: 'hello GPT',
         },
     }
 }
