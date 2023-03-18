@@ -53,8 +53,29 @@ export const TEST_COMMAND = {
 // Simple gpt command
 export const GPT3_COMMAND = {
   name: 'gpt',
-  description: 'Basic gpt prompt',
-  type: 1,
+  description: 'Basic gpt prompt!',
+  options: [
+    {
+      name: "prompt",
+      description: "your prompt",
+      type: 3,
+      required: true
+    }
+  ]
+};
+
+// Simple chatgpt command
+export const CHGPT_COMMAND = {
+  name: 'ch',
+  description: 'Basic chat gpt prompt!',
+  options: [
+    {
+      name: "prompt",
+      description: "your prompt",
+      type: 3,
+      required: true
+    }
+  ]
 };
 
 

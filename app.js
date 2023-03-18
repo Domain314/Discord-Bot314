@@ -4,17 +4,18 @@ import {
   InteractionResponseType,
   InteractionResponseFlags,
   MessageComponentTypes,
-  ButtonStyleTypes,
+  ButtonStyleTypes
 } from 'discord-interactions';
 import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils.js';
 import { getShuffledOptions, getResult } from './game.js';
 import {
   GPT3_COMMAND,
   TEST_COMMAND,
+  CHGPT_COMMAND,
   HasGuildCommands,
 } from './commands.js';
 import { helloWorld } from './src/com.js';
-import { helloGPT } from './src/com.js';
+import { helloGPT, basicChatGPT } from './src/com.js';
 
 // Create an express app
 const app = express();
@@ -30,9 +31,11 @@ const activeGames = {};
  */
 app.post('/interactions', async function (req, res) {
   // Interaction type and data
-  const { type, id, data } = req.body;
+  const { type, data } = req.body;
+  const prompt = data.options[0].value;
 
-  console.log(req.body);
+  console.log("req body: ", req.body);
+  console.log("prompt: ", prompt);
 
   /**
    * Handle verification requests
@@ -50,7 +53,8 @@ app.post('/interactions', async function (req, res) {
 
     switch (name) {
       case 'test': return res.send(helloWorld());
-      case 'gpt': return res.send(helloGPT());
+      case 'gpt': return res.send(await helloGPT(prompt));
+      case 'ch': await basicChatGPT(req.body, prompt); return res.send(200).end();
     }
 
   }
@@ -144,5 +148,6 @@ app.listen(PORT, () => {
   HasGuildCommands(process.env.APP_ID, process.env.GUILD_ID, [
     TEST_COMMAND,
     GPT3_COMMAND,
+    CHGPT_COMMAND
   ]);
 });
